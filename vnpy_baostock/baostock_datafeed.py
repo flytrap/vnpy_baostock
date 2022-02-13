@@ -61,9 +61,10 @@ class BaoStockDatafeed(BaseDatafeed):
         interval = req.interval
         start = req.start.strftime("%Y-%m-%d")
         end = req.end.strftime("%Y-%m-%d")
+        bs_symbol = f"sz.{symbol}" if exchange == Exchange.SZSE else f"sh.{symbol}"
 
-        ts_interval = INTERVAL_VT2TS.get(interval)
-        if not ts_interval:
+        bs_interval = INTERVAL_VT2TS.get(interval)
+        if not bs_interval:
             return None
 
         if interval in (Interval.MINUTE, Interval.HOUR):
@@ -72,11 +73,11 @@ class BaoStockDatafeed(BaseDatafeed):
             fields = "date,code,open,high,low,close,volume,amount"
         try:
             rs = bs.query_history_k_data_plus(
-                symbol,
+                bs_symbol,
                 fields,
                 start_date=start,
                 end_date=end,
-                frequency=ts_interval,
+                frequency=bs_interval,
                 adjustflag="3",
             )
         except Exception as e:
