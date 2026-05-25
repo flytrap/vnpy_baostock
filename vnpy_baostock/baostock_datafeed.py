@@ -4,7 +4,7 @@
 # Created by flytrap
 # Created time: 2022/02/12
 from datetime import datetime
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 import baostock as bs
 from vnpy.trader.constant import Exchange, Interval
@@ -51,7 +51,7 @@ class BaoStockDatafeed(BaseDatafeed):
     def __delete__(self):
         bs.logout()
 
-    def query_bar_history(self, req: HistoryRequest) -> Optional[List[BarData]]:
+    def query_bar_history(self, req: HistoryRequest, output: Callable = print) -> Optional[List[BarData]]:
         """查询k线数据"""
         if not self.inited:
             self.init()

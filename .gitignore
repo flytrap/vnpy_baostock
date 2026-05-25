@@ -1,3 +1,4 @@
 dist/
 vnpy_baostock.egg-info/
+__pycache__/
 .DS_Store
