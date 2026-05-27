@@ -38,13 +38,14 @@ class BaoStockDatafeed(BaseDatafeed):
 
         self.inited: bool = False
 
-    def init(self) -> bool:
+    def init(self, output: Callable = print) -> bool:
         """初始化"""
         if self.inited:
             return True
 
         bs.login()
         self.inited = True
+        output("BaoStock数据服务连接成功")
 
         return True
 
